@@ -13,6 +13,8 @@ import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +26,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +37,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.sound.SmartSoundManager
+import com.example.ui.splash.AnimatedTimerSplash
 import com.example.ui.theme.MyApplicationTheme
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -61,16 +67,31 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       MyApplicationTheme {
+        var showSplash by remember { mutableStateOf(true) }
+
         Surface(
           modifier = Modifier.fillMaxSize(),
           color = androidx.compose.ui.graphics.Color.White
         ) {
-          ReactionTimerScreen(
-            modifier = Modifier
-              .fillMaxSize()
-              .safeDrawingPadding()
-              .testTag("reaction_timer_screen")
-          )
+          Crossfade(
+            targetState = showSplash,
+            animationSpec = tween(durationMillis = 400),
+            label = "SplashCrossfade"
+          ) { isSplash ->
+            if (isSplash) {
+              AnimatedTimerSplash(
+                onSplashFinished = { showSplash = false },
+                modifier = Modifier.fillMaxSize()
+              )
+            } else {
+              ReactionTimerScreen(
+                modifier = Modifier
+                  .fillMaxSize()
+                  .safeDrawingPadding()
+                  .testTag("reaction_timer_screen")
+              )
+            }
+          }
         }
       }
     }

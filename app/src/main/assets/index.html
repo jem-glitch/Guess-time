@@ -15,15 +15,14 @@
 
         body {
             background: #ffffff;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            padding: 16px;
-            gap: 36px;
+            padding: 50px 16px 10px 16px; /* Exactly 50px from top, tight to bottom ad */
         }
 
         /* ===== Authentic Retro 1970s/1980s LED Clock Housing ===== */
@@ -66,7 +65,7 @@
             border-top-right-radius: 7px;
         }
 
-        /* 7-Segment LED Digits Container (LTR with clear separation gaps) */
+        /* 7-Segment LED Digits Container */
         .led-digits-container {
             display: flex;
             align-items: center;
@@ -116,138 +115,127 @@
 
         /* ===== Main Controls Area ===== */
         .controls-wrapper {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
             width: 100%;
             max-width: 420px;
+            padding-bottom: 6px;
         }
 
-        /* ===== Control Button ===== */
+        /* ===== 3D Cylinder Button Wrapper & Base ===== */
+        .btn-cylinder-base {
+            width: clamp(190px, 50vw, 240px);
+            height: clamp(190px, 50vw, 240px);
+            border-radius: 50%;
+            padding-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* ===== 3D Elevated Cylinder Control Button ===== */
         .control-btn {
-            width: clamp(165px, 42vw, 220px);
-            height: clamp(165px, 42vw, 220px);
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             border: none;
             outline: none;
             cursor: pointer;
             font-family: inherit;
-            font-size: clamp(2.1rem, 6vw, 2.9rem);
+            font-size: clamp(2.1rem, 6.2vw, 2.9rem);
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 2px;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 8px 26px rgba(0,0,0,0.14),
-                0 2px 6px rgba(0,0,0,0.08);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            /* Elevated 3D Cylinder */
+            transform: translateY(-10px);
+            transition: transform 0.12s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.12s cubic-bezier(0.2, 0, 0, 1), background 0.25s ease;
         }
 
-        .control-btn:active {
-            transform: scale(0.94);
-            box-shadow: 
-                0 3px 12px rgba(0,0,0,0.1),
-                inset 0 2px 4px rgba(0,0,0,0.08);
-        }
-
-        /* Idle State - Green */
+        /* Idle State - Green 3D Cylinder */
         .control-btn.idle {
-            background: #22c55e;
-        }
-
-        .control-btn.idle:hover {
-            transform: scale(1.04);
+            background: linear-gradient(180deg, #2ecc71 0%, #22c55e 60%, #16a34a 100%);
             box-shadow: 
-                0 12px 38px rgba(34, 197, 94, 0.32),
-                0 3px 10px rgba(0,0,0,0.08);
+                0 3px 0 #15803d,
+                0 6px 0 #14532d,
+                0 10px 0 #0d3b1f,
+                0 14px 18px rgba(0, 0, 0, 0.32),
+                inset 0 2px 3px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Running State - Red */
+        /* Running State - Red 3D Cylinder */
         .control-btn.running {
-            background: #ef4444;
+            background: linear-gradient(180deg, #f87171 0%, #ef4444 60%, #dc2626 100%);
             box-shadow: 
-                0 8px 26px rgba(239, 68, 68, 0.28),
-                0 2px 6px rgba(0,0,0,0.08);
+                0 3px 0 #b91c1c,
+                0 6px 0 #991b1b,
+                0 10px 0 #7f1d1d,
+                0 14px 18px rgba(0, 0, 0, 0.35),
+                inset 0 2px 3px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .control-btn.running:hover {
-            transform: scale(1.04);
+        /* Hover on PC/Pointer */
+        @media (hover: hover) {
+            .control-btn.idle:hover {
+                transform: translateY(-12px);
+                box-shadow: 
+                    0 3px 0 #15803d,
+                    0 7px 0 #14532d,
+                    0 12px 0 #0d3b1f,
+                    0 18px 24px rgba(0, 0, 0, 0.35),
+                    inset 0 2px 3px rgba(255, 255, 255, 0.45);
+            }
+
+            .control-btn.running:hover {
+                transform: translateY(-12px);
+                box-shadow: 
+                    0 3px 0 #b91c1c,
+                    0 7px 0 #991b1b,
+                    0 12px 0 #7f1d1d,
+                    0 18px 24px rgba(0, 0, 0, 0.38),
+                    inset 0 2px 3px rgba(255, 255, 255, 0.45);
+            }
+        }
+
+        /* Pressed State - Plunges/Sinks down into the base (خفوت للأسفل) */
+        .control-btn:active,
+        .control-btn.pressed {
+            transform: translateY(2px) !important;
+            transition: transform 0.05s ease-out, box-shadow 0.05s ease-out;
+        }
+
+        .control-btn.idle:active,
+        .control-btn.idle.pressed {
             box-shadow: 
-                0 12px 38px rgba(239, 68, 68, 0.35),
-                0 3px 10px rgba(0,0,0,0.08);
+                0 1px 0 #14532d,
+                0 2px 0 #0d3b1f,
+                0 4px 8px rgba(0, 0, 0, 0.22),
+                inset 0 3px 6px rgba(0, 0, 0, 0.3) !important;
         }
 
-        /* ===== Discreet Sound Download Element ===== */
-        .sound-download-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 12px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            transition: opacity 0.3s ease;
-            max-width: 90%;
-            text-align: center;
-        }
-
-        .sound-pack-label {
-            font-size: clamp(0.78rem, 2.4vw, 0.88rem);
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .sound-download-btn {
-            background: #2563eb;
-            color: #ffffff;
-            border: none;
-            outline: none;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-family: inherit;
-            font-size: clamp(0.82rem, 2.5vw, 0.92rem);
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
-        }
-
-        .sound-download-btn:active {
-            transform: scale(0.96);
-        }
-
-        .sound-download-btn.downloaded {
-            background: #10b981;
-            color: #ffffff;
-            cursor: default;
-            box-shadow: none;
-        }
-
-        .sound-download-btn.downloading {
-            background: #f59e0b;
-            color: #ffffff;
-            cursor: wait;
-        }
-
-        .sound-download-btn.error {
-            background: #ef4444;
-            color: #ffffff;
+        .control-btn.running:active,
+        .control-btn.running.pressed {
+            box-shadow: 
+                0 1px 0 #991b1b,
+                0 2px 0 #7f1d1d,
+                0 4px 8px rgba(0, 0, 0, 0.25),
+                inset 0 3px 6px rgba(0, 0, 0, 0.3) !important;
         }
 
         /* ===== Responsive ===== */
         @media (max-width: 480px) {
             body {
-                gap: 28px;
-                padding: 12px;
+                padding: 50px 12px 8px 12px;
             }
 
             .retro-clock-face {
@@ -315,16 +303,10 @@
 
     <!-- Controls Wrapper -->
     <div class="controls-wrapper">
-        <!-- Control Button -->
-        <button class="control-btn idle" id="controlBtn" onclick="handleClick()">
-            ابدأ
-        </button>
-
-        <!-- Sound Pack Download Element (Shows when Online / Downloaded) -->
-        <div class="sound-download-panel" id="soundDownloadPanel" style="display: none;">
-            <span class="sound-pack-label">تحميل صوت توم من كرتون توم وجيري</span>
-            <button class="sound-download-btn" id="soundDownloadBtn" onclick="handleSoundDownload()">
-                تحميل الصوت
+        <!-- 3D Elevated Cylinder Button Base -->
+        <div class="btn-cylinder-base">
+            <button class="control-btn idle" id="controlBtn" onclick="handleClick()">
+                ابدأ
             </button>
         </div>
     </div>
@@ -358,7 +340,7 @@
             return SEG_KEYS.map(k => document.getElementById(`d${d}_${k}`));
         });
 
-        // ===== Audio Context Fallback =====
+        // ===== Audio Playback (Single Clear Loud Button Sound) =====
         let audioCtx = null;
 
         function getAudioContext() {
@@ -376,48 +358,48 @@
             audioInitialized = true;
         }
 
-        function playSound(type) {
+        function playButtonSound(type) {
             try {
-                // 1. Primary: Native Android Sound Bridge (Offline APK / Downloaded Pack in Internal Storage)
+                // 1. Primary: Native High-Performance Audio Track
                 if (window.AndroidSoundBridge && typeof window.AndroidSoundBridge.playSound === 'function') {
                     window.AndroidSoundBridge.playSound(type);
                     return;
                 }
 
-                // 2. Fallback: Web Audio synthesis
+                // 2. Web Audio synthesis fallback (Clear, Loud & Satisfying Arcade/Mechanical Button)
                 const ctx = getAudioContext();
                 if (!ctx) return;
                 initAudio();
 
                 const now = ctx.currentTime;
 
-                if (type === 'start') {
-                    const osc1 = ctx.createOscillator();
-                    const gain1 = ctx.createGain();
-                    osc1.connect(gain1);
-                    gain1.connect(ctx.destination);
-                    osc1.type = 'triangle';
-                    osc1.frequency.setValueAtTime(650, now);
-                    osc1.frequency.exponentialRampToValueAtTime(1500, now + 0.28);
-                    gain1.gain.setValueAtTime(0.7, now);
-                    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
-                    osc1.start(now);
-                    osc1.stop(now + 0.28);
-                } else {
-                    const osc1 = ctx.createOscillator();
-                    const gain1 = ctx.createGain();
-                    osc1.connect(gain1);
-                    gain1.connect(ctx.destination);
-                    osc1.type = 'sawtooth';
-                    osc1.frequency.setValueAtTime(700, now);
-                    osc1.frequency.exponentialRampToValueAtTime(160, now + 0.25);
-                    gain1.gain.setValueAtTime(0.6, now);
-                    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-                    osc1.start(now);
-                    osc1.stop(now + 0.25);
-                }
+                // Layer 1: Warm Audible Click
+                const oscClick = ctx.createOscillator();
+                const gainClick = ctx.createGain();
+                oscClick.connect(gainClick);
+                gainClick.connect(ctx.destination);
+                oscClick.type = 'sine';
+                oscClick.frequency.setValueAtTime(1850, now);
+                oscClick.frequency.exponentialRampToValueAtTime(520, now + 0.04);
+                gainClick.gain.setValueAtTime(0.85, now);
+                gainClick.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+                oscClick.start(now);
+                oscClick.stop(now + 0.05);
+
+                // Layer 2: Deep Solid Body Punch
+                const oscBody = ctx.createOscillator();
+                const gainBody = ctx.createGain();
+                oscBody.connect(gainBody);
+                gainBody.connect(ctx.destination);
+                oscBody.type = 'sine';
+                oscBody.frequency.setValueAtTime(340, now);
+                oscBody.frequency.exponentialRampToValueAtTime(115, now + 0.08);
+                gainBody.gain.setValueAtTime(1.0, now);
+                gainBody.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+                oscBody.start(now);
+                oscBody.stop(now + 0.09);
             } catch(e) {
-                console.error("Audio playback error", e);
+                console.error("Audio error", e);
             }
         }
 
@@ -464,6 +446,7 @@
 
             if (!isRunning) {
                 // Start (reset to 00.00 and begin)
+                playButtonSound('start');
                 isRunning = true;
                 startTime = performance.now();
                 elapsed = 0;
@@ -472,10 +455,10 @@
                 btn.className = 'control-btn running';
                 btn.textContent = 'توقف';
 
-                playSound('start');
                 animationFrame = requestAnimationFrame(gameLoop);
             } else {
                 // Stop
+                playButtonSound('stop');
                 isRunning = false;
                 elapsed = performance.now() - startTime;
                 if (animationFrame) {
@@ -485,107 +468,56 @@
 
                 btn.className = 'control-btn idle';
                 btn.textContent = 'ابدأ';
-
-                playSound('stop');
             }
         }
-
-        // ===== Sound Pack Download UI Logic =====
-        function updateSoundPackUI() {
-            if (!window.AndroidSoundBridge || typeof window.AndroidSoundBridge.getSoundPackStatus !== 'function') {
-                return;
-            }
-
-            try {
-                const statusJson = window.AndroidSoundBridge.getSoundPackStatus();
-                const status = JSON.parse(statusJson);
-
-                const panel = document.getElementById('soundDownloadPanel');
-                const btn = document.getElementById('soundDownloadBtn');
-
-                if (!status.isOnline && !status.isDownloaded) {
-                    // Offline and not downloaded -> Hide UI completely
-                    panel.style.display = 'none';
-                    return;
-                }
-
-                panel.style.display = 'flex';
-
-                if (status.isDownloading) {
-                    btn.className = 'sound-download-btn downloading';
-                    btn.textContent = `جاري تحميل الصوت... ${status.progress}%`;
-                    btn.disabled = true;
-                } else if (status.hasUpdate) {
-                    btn.className = 'sound-download-btn';
-                    btn.textContent = 'تحديث الصوت';
-                    btn.disabled = false;
-                } else if (status.isDownloaded) {
-                    btn.className = 'sound-download-btn downloaded';
-                    btn.textContent = 'تم تحميل الصوت';
-                    btn.disabled = true;
-                } else {
-                    btn.className = 'sound-download-btn';
-                    btn.textContent = 'تحميل الصوت';
-                    btn.disabled = false;
-                }
-            } catch (e) {
-                console.error("Status update error", e);
-            }
-        }
-
-        function handleSoundDownload() {
-            if (window.AndroidSoundBridge && typeof window.AndroidSoundBridge.startSoundPackDownload === 'function') {
-                const btn = document.getElementById('soundDownloadBtn');
-                btn.className = 'sound-download-btn downloading';
-                btn.textContent = 'جاري بدء التحميل...';
-                btn.disabled = true;
-                window.AndroidSoundBridge.startSoundPackDownload();
-            }
-        }
-
-        // Callbacks invoked from Android Native
-        window.onAudioDownloadProgress = function(percent) {
-            const btn = document.getElementById('soundDownloadBtn');
-            btn.className = 'sound-download-btn downloading';
-            btn.textContent = `جاري تحميل الصوت... ${percent}%`;
-            btn.disabled = true;
-        };
-
-        window.onAudioDownloadSuccess = function() {
-            const btn = document.getElementById('soundDownloadBtn');
-            btn.className = 'sound-download-btn downloaded';
-            btn.textContent = 'تم تحميل الصوت';
-            btn.disabled = true;
-        };
-
-        window.onAudioDownloadError = function(errMsg) {
-            const btn = document.getElementById('soundDownloadBtn');
-            btn.className = 'sound-download-btn error';
-            btn.textContent = 'فشل تحميل الصوت';
-            btn.disabled = false;
-        };
 
         // ===== Keyboard Support =====
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'Enter') {
                 e.preventDefault();
+                const btn = document.getElementById('controlBtn');
+                btn.classList.add('pressed');
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                e.preventDefault();
+                const btn = document.getElementById('controlBtn');
+                btn.classList.remove('pressed');
                 handleClick();
             }
         });
 
-        // ===== Touch Support =====
+        // ===== 3D Push Physics & Touch Support =====
         const btn = document.getElementById('controlBtn');
+        
         btn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            handleClick();
-        }, { passive: false });
+            btn.classList.add('pressed');
+        }, { passive: true });
 
-        // ===== Periodic status check =====
-        setInterval(updateSoundPackUI, 2500);
+        btn.addEventListener('touchend', (e) => {
+            btn.classList.remove('pressed');
+        }, { passive: true });
+
+        btn.addEventListener('touchcancel', (e) => {
+            btn.classList.remove('pressed');
+        }, { passive: true });
+
+        btn.addEventListener('mousedown', () => {
+            btn.classList.add('pressed');
+        });
+
+        btn.addEventListener('mouseup', () => {
+            btn.classList.remove('pressed');
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.classList.remove('pressed');
+        });
 
         // ===== Initialize =====
         updateDisplay();
-        setTimeout(updateSoundPackUI, 300);
     </script>
 </body>
 </html>
