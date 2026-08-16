@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "title": "حزمة أصوات توم الكوميدية",
+  "startSounds": [
+    "https://upload.wikimedia.org/wikipedia/commons/4/4b/Slide_whistle_up.ogg",
+    "https://upload.wikimedia.org/wikipedia/commons/a/a2/Cartoon_boing.ogg"
+  ],
+  "stopSounds": [
+    "https://upload.wikimedia.org/wikipedia/commons/e/e0/Cartoon_accent.ogg",
+    "https://upload.wikimedia.org/wikipedia/commons/9/90/Cartoon_pop.ogg"
+  ]
+}

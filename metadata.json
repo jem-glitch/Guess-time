@@ -1,0 +1,7 @@
+{
+  "name": "مؤقت رد الفعل",
+  "description": "تطبيق مؤقت رد الفعل السريع بدقة أجزاء الثانية وتأثيرات صوتية تفاعلية بدون إنترنت",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
