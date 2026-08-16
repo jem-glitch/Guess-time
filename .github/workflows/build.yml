@@ -37,12 +37,12 @@ jobs:
             "platforms;android-36" \
             "build-tools;36.0.0"
 
-      - name: تثبيت Gradle 8.10.2
+      - name: تثبيت Gradle 9.3.1
         run: |
           curl -fsSL -o gradle.zip \
-            https://services.gradle.org/distributions/gradle-8.10.2-bin.zip
+            https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
           unzip -q gradle.zip -d /opt
-          echo "/opt/gradle-8.10.2/bin" >> $GITHUB_PATH
+          echo "/opt/gradle-9.3.1/bin" >> $GITHUB_PATH
 
       - name: بناء APK
         run: gradle assembleDebug --no-daemon --stacktrace
