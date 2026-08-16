@@ -3,14 +3,14 @@ name: Build Android APK
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch:  # تتيح لك تشغيل البناء يدويًا
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 1. سحب الكود من المستودع
+    - name: 1. سحب الكود
       uses: actions/checkout@v4
 
     - name: 2. إعداد Java 17
@@ -25,10 +25,10 @@ jobs:
     - name: 4. منح صلاحية التنفيذ لـ Gradle
       run: chmod +x gradlew
 
-    - name: 5. بناء APK (نسخة Debug)
-      run: ./gradlew assembleDebug
+    - name: 5. بناء APK
+      run: ./gradlew assembleDebug --no-daemon
 
-    - name: 6. رفع ملف APK كـ Artifact
+    - name: 6. رفع الملف
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
