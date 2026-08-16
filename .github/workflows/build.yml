@@ -23,7 +23,6 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
 
       - name: تثبيت Android SDK
         run: |
