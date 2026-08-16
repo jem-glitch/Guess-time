@@ -37,11 +37,15 @@ jobs:
             "platforms;android-36" \
             "build-tools;36.0.0"
 
-      - name: منح صلاحية التنفيذ
-        run: chmod +x gradlew
+      - name: تثبيت Gradle 9.3.1
+        run: |
+          curl -fsSL -o gradle.zip \
+            https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
+          unzip -q gradle.zip -d /opt
+          echo "/opt/gradle-9.3.1/bin" >> $GITHUB_PATH
 
       - name: بناء APK
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: gradle assembleDebug --no-daemon --stacktrace
 
       - name: رفع الملف
         uses: actions/upload-artifact@v5
