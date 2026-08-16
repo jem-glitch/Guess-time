@@ -11,16 +11,16 @@ jobs:
 
     steps:
     - name: 1. سحب الكود
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4  # ملاحظة: لازال الإصدار v4 متوافقًا
 
     - name: 2. إعداد Java 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5  # تم التحديث من v4 إلى v5
       with:
         distribution: 'temurin'
         java-version: '17'
 
     - name: 3. إعداد Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v3  # ملاحظة: لازال الإصدار v3 متوافقًا
 
     - name: 4. منح صلاحية التنفيذ لـ Gradle
       run: chmod +x gradlew
@@ -29,7 +29,7 @@ jobs:
       run: ./gradlew assembleDebug --no-daemon
 
     - name: 6. رفع الملف
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4  # ملاحظة: لازال الإصدار v4 متوافقًا
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/*.apk
